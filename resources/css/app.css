@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@source "../../app/**/*.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
+
+@theme {
+    --font-heading: 'Outfit', sans-serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    --color-samsara-forest: #1E3A2B;
+    --color-samsara-forest-dark: #12241B;
+    --color-samsara-forest-light: #2D5841;
+    --color-samsara-forest-subtle: #EBF2EE;
+
+    --color-samsara-earth: #D97736;
+    --color-samsara-earth-dark: #B25A20;
+    --color-samsara-earth-light: #FBEFE7;
+
+    --color-samsara-slate: #0F172A;
+    --color-samsara-card: #FFFFFF;
+    --color-samsara-surface: #F8FAFC;
+    --color-samsara-border: #E2E8F0;
+}
+
+/* Ergonomic Mobile Touch Target Rules */
+.touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Custom Scrollbar for Horizontal Scrollers */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

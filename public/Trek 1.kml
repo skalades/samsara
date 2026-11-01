@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+  <Document>
+    <Schema id="schema0" name="schema0">
+      <SimpleField name="Description" type="string"/>
+      <SimpleField name="pdfmaps_photos" type="string">
+        <displayName>Photos</displayName>
+      </SimpleField>
+    </Schema>
+    <Folder>
+      <styleUrl>#style0</styleUrl>
+      <name>Lapisan 1</name>
+      <ExtendedData>
+        <SchemaData schemaUrl="#schema0"/>
+      </ExtendedData>
+      <Placemark>
+        <name>Base camp cigedug</name>
+        <TimeStamp>
+          <when>2026-10-17T13:16:09+07:00</when>
+        </TimeStamp>
+        <styleUrl>#style1</styleUrl>
+        <Point>
+          <coordinates>
+            107.809948278004,-7.33202081412109,1244.9537243598
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Jembatan</name>
+        <TimeStamp>
+          <when>2026-10-16T18:05:31+07:00</when>
+        </TimeStamp>
+        <styleUrl>#style2</styleUrl>
+        <Point>
+          <coordinates>
+            107.844020091098,-7.3284038901397,1942.22540743552
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Pos 2</name>
+        <TimeStamp>
+          <when>2026-10-17T10:53:03+07:00</when>
+        </TimeStamp>
+        <styleUrl>#style1</styleUrl>
+        <Point>
+          <coordinates>
+            107.836590716815,-7.32940809292047,1682.45582898832
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Pos 3</name>
+        <TimeStamp>
+          <when>2026-10-17T04:25:07+07:00</when>
+        </TimeStamp>
+        <styleUrl>#style1</styleUrl>
+        <Point>
+          <coordinates>
+            107.847454876385,-7.32735456081641,2096.62791270876
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Pos 5</name>
+        <TimeStamp>
+          <when>2026-10-17T03:58:01+07:00</when>
+        </TimeStamp>
+        <styleUrl>#style1</styleUrl>
+        <Point>
+          <coordinates>
+            107.853523838905,-7.32441789454035,2487.89111352744
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Pos 6</name>
+        <TimeStamp>
+          <when>2026-10-17T04:55:32+07:00</when>
+        </TimeStamp>
+        <styleUrl>#style1</styleUrl>
+        <Point>
+          <coordinates>
+            107.857622465876,-7.3247498694734,2688.09034181525
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Pos1</name>
+        <TimeStamp>
+          <when>2026-10-17T12:25:58+07:00</when>
+        </TimeStamp>
+        <styleUrl>#style1</styleUrl>
+        <Point>
+          <coordinates>
+            107.825108656273,-7.33178576906315,1424.37881203577
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Pos4</name>
+        <TimeStamp>
+          <when>2026-10-17T03:12:00+07:00</when>
+        </TimeStamp>
+        <styleUrl>#style1</styleUrl>
+        <Point>
+          <coordinates>
+            107.850252431549,-7.32615337666584,2257.29399350529
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Puncak</name>
+        <TimeStamp>
+          <when>2026-10-17T05:32:46+07:00</when>
+        </TimeStamp>
+        <styleUrl>#style1</styleUrl>
+        <Point>
+          <coordinates>
+            107.859850020584,-7.32259781621827,2803.77714016831
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Style id="style0">
+      <IconStyle>
+        <color>7f2e80ff</color>
+        <Icon>
+          <href>http://download.avenza.com/images/pdfmaps_icons/red_pin.png</href>
+        </Icon>
+        <hotSpot x="0.5" xunits="fraction" y="0.5" yunits="fraction"/>
+      </IconStyle>
+      <LineStyle>
+        <color>ff2e80ff</color>
+        <width>4</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>7f2e80ff</color>
+      </PolyStyle>
+    </Style>
+    <Style id="style1">
+      <IconStyle>
+        <Icon>
+          <href>http://download.avenza.com/images/pdfmaps_icons/red_pin.png</href>
+        </Icon>
+        <hotSpot x="0.5" xunits="fraction" y="0.5" yunits="fraction"/>
+      </IconStyle>
+    </Style>
+    <Style id="style2">
+      <IconStyle>
+        <Icon>
+          <href>http://download.avenza.com/images/pdfmaps_icons/yellow_pin.png</href>
+        </Icon>
+        <hotSpot x="0.5" xunits="fraction" y="0.5" yunits="fraction"/>
+      </IconStyle>
+    </Style>
+  </Document>
+</kml>
