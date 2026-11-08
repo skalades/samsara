@@ -98,6 +98,8 @@ Route::prefix('ojek')->name('ojek.public.')->group(function () {
 // 1. Modul POS Kasir Terpadu (Superadmin, Kasir)
 Route::prefix('pos')->name('pos.')->middleware(['auth', 'role:SUPERADMIN,KASIR'])->group(function () {
     Route::get('/', [PosController::class, 'index'])->name('index');
+    Route::get('/simaksi/search', [PosController::class, 'searchBooking'])->name('simaksi.search');
+    Route::post('/simaksi/walkin', [PosController::class, 'storeWalkInBooking'])->name('simaksi.walkin');
     Route::post('/checkout', [PosController::class, 'checkout'])->name('checkout');
     Route::get('/invoice/{invoiceNumber}', [PosController::class, 'invoice'])->name('invoice');
     Route::post('/pickup', [PosController::class, 'pickupScan'])->name('pickup');
@@ -153,8 +155,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:SUPERADMIN,ADM
         Route::delete('/photos/{id}', [CheckpointPhotoController::class, 'destroy'])->name('photos.destroy');
     });
 
-    // Konfirmasi Pembayaran Manual
+    // Konfirmasi Pembayaran Manual & Registrasi Walk-In Admin
     Route::get('/bookings/pending', [AdminController::class, 'pendingBookings'])->name('bookings.pending');
+    Route::post('/bookings/walkin', [AdminController::class, 'storeWalkInBooking'])->name('bookings.walkin');
     Route::post('/bookings/{id}/confirm', [AdminController::class, 'confirmBookingPayment'])->name('bookings.confirm');
     Route::post('/bookings/{id}/reject', [AdminController::class, 'rejectBookingPayment'])->name('bookings.reject');
 

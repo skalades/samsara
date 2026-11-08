@@ -8,6 +8,8 @@ use App\Modules\POS\Models\PosOrder;
 use App\Modules\POS\Services\PosService;
 use App\Modules\Rental\Models\RentalItem;
 use App\Modules\Simaksi\Models\SimaksiBooking;
+use App\Modules\Simaksi\Models\TrailSetting;
+use App\Modules\Simaksi\Services\BookingService;
 use App\Modules\Store\Models\Product;
 use App\Shared\Enums\BookingStatus;
 use App\Shared\Enums\RentalAssetStatus;
@@ -49,8 +51,97 @@ class PosController extends Controller
             ->get();
 
         $ojekRoutes = \App\Modules\Ojek\Models\OjekRoute::where('is_active', true)->get();
+        $trailSetting = TrailSetting::current();
 
-        return view('pos.index', compact('activeShift', 'products', 'availableRentals', 'recentOrders', 'isKasir', 'ojekRoutes'));
+        return view('pos.index', compact('activeShift', 'products', 'availableRentals', 'recentOrders', 'isKasir', 'ojekRoutes', 'trailSetting'));
+    }
+
+    /**
+     * Cari booking SIMAKSI yang berstatus PENDING_PAYMENT untuk dibayar di loket kasir.
+     */
+    public function searchBooking(Request $request): JsonResponse
+    {
+        $query = trim($request->input('q', ''));
+        if (strlen($query) < 2) {
+            return response()->json([
+                'success' => true,
+                'bookings' => [],
+            ]);
+        }
+
+        $bookings = SimaksiBooking::with('members')
+            ->where('status', BookingStatus::PENDING_PAYMENT)
+            ->where(function ($q) use ($query) {
+                $q->where('booking_code', 'like', "%{$query}%")
+                    ->orWhere('leader_name', 'like', "%{$query}%")
+                    ->orWhere('leader_phone', 'like', "%{$query}%")
+                    ->orWhere('qr_token', $query);
+            })
+            ->latest()
+            ->take(8)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'bookings' => $bookings,
+        ]);
+    }
+
+    /**
+     * Input langsung pendaftaran SIMAKSI Walk-in (On-The-Spot) oleh kasir di loket.
+     */
+    public function storeWalkInBooking(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'hiking_date' => 'required|date|after_or_equal:today',
+            'duration_days' => 'required|integer|min:1|max:4',
+            'leader_name' => 'required|string|max:150',
+            'leader_nik' => 'required|digits:16',
+            'leader_phone' => 'required|string|max:20',
+            'leader_email' => 'nullable|email|max:100',
+            'leader_address' => 'nullable|string|max:255',
+            'emergency_contact_name' => 'required|string|max:150',
+            'emergency_contact_phone' => 'required|string|max:20',
+            'tent_color_details' => 'nullable|string|max:255',
+            'notes' => 'nullable|string|max:500',
+            'members' => 'required|array|min:1',
+            'members.*.full_name' => 'required|string|max:150',
+            'members.*.nik' => 'nullable|digits:16',
+            'members.*.gender' => 'required|in:L,P',
+            'members.*.age' => 'required|integer|min:7|max:80',
+            'members.*.medical_history' => 'nullable|string|max:255',
+        ]);
+
+        try {
+            $bookingService = app(BookingService::class);
+
+            $validated['leader_email'] = $validated['leader_email'] ?? ('walkin_' . time() . '@samsara.basecamp');
+            $validated['leader_address'] = $validated['leader_address'] ?? 'Walk-in Basecamp Cigedug';
+            $validated['payment_method'] = 'CASH';
+            $validated['notes'] = trim(($validated['notes'] ?? '') . ' [Registrasi Walk-In di Loket Kasir Basecamp]');
+
+            foreach ($validated['members'] as &$member) {
+                if (empty($member['nik'])) {
+                    $member['nik'] = $validated['leader_nik'];
+                }
+                if (empty($member['medical_history'])) {
+                    $member['medical_history'] = 'Sehat / Tidak ada riwayat';
+                }
+            }
+
+            $booking = $bookingService->createBooking($validated);
+
+            return response()->json([
+                'success' => true,
+                'message' => "SIMAKSI walk-in untuk rombongan {$booking->leader_name} ({$booking->booking_code}) berhasil dibuat.",
+                'booking' => $booking->load('members', 'ecoDeposit'),
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 422);
+        }
     }
 
     public function checkout(Request $request): JsonResponse

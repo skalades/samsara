@@ -168,6 +168,63 @@ class AdminController extends Controller
     }
 
     /**
+     * Registrasi langsung SIMAKSI Walk-in / On-The-Spot oleh Admin Basecamp.
+     */
+    public function storeWalkInBooking(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'hiking_date' => 'required|date|after_or_equal:today',
+            'duration_days' => 'required|integer|min:1|max:4',
+            'leader_name' => 'required|string|max:150',
+            'leader_nik' => 'required|digits:16',
+            'leader_phone' => 'required|string|max:20',
+            'leader_email' => 'nullable|email|max:100',
+            'leader_address' => 'nullable|string|max:255',
+            'emergency_contact_name' => 'required|string|max:150',
+            'emergency_contact_phone' => 'required|string|max:20',
+            'payment_status' => 'required|in:PENDING_PAYMENT,CONFIRMED',
+            'tent_color_details' => 'nullable|string|max:255',
+            'notes' => 'nullable|string|max:500',
+            'members' => 'required|array|min:1',
+            'members.*.full_name' => 'required|string|max:150',
+            'members.*.nik' => 'nullable|digits:16',
+            'members.*.gender' => 'required|in:L,P',
+            'members.*.age' => 'required|integer|min:7|max:80',
+            'members.*.medical_history' => 'nullable|string|max:255',
+        ]);
+
+        try {
+            $validated['leader_email'] = $validated['leader_email'] ?? ('walkin_' . time() . '@samsara.basecamp');
+            $validated['leader_address'] = $validated['leader_address'] ?? 'Walk-in Basecamp Cigedug';
+            $validated['payment_method'] = 'CASH';
+            $validated['notes'] = trim(($validated['notes'] ?? '') . ' [Registrasi Staf/Admin Basecamp]');
+
+            foreach ($validated['members'] as &$member) {
+                if (empty($member['nik'])) {
+                    $member['nik'] = $validated['leader_nik'];
+                }
+                if (empty($member['medical_history'])) {
+                    $member['medical_history'] = 'Sehat / Tidak ada riwayat';
+                }
+            }
+
+            $booking = $this->bookingService->createBooking($validated);
+
+            if ($request->input('payment_status') === 'CONFIRMED') {
+                $this->bookingService->confirmPayment($booking->id, auth()->id());
+                $statusMsg = "dan pembayaran telah dikonfirmasi (Lunas)";
+            } else {
+                $statusMsg = "dengan status Menunggu Pembayaran di Loket";
+            }
+
+            return redirect()->route('admin.bookings.pending')
+                ->with('success', "Registrasi walk-in rombongan {$booking->leader_name} ({$booking->booking_code}) berhasil dibuat {$statusMsg}!");
+        } catch (Exception $e) {
+            return back()->withInput()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
      * Konfirmasi pembayaran booking oleh admin.
      */
     public function confirmBookingPayment(Request $request, int $bookingId): RedirectResponse

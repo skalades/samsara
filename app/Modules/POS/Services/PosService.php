@@ -177,6 +177,7 @@ class PosService
                     $booking->update([
                         'status' => \App\Shared\Enums\BookingStatus::CONFIRMED,
                         'paid_at' => now(),
+                        'payment_method' => $paymentMethod,
                     ]);
                 }
             }
