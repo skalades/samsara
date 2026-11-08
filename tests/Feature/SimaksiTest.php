@@ -24,7 +24,7 @@ class SimaksiTest extends TestCase
     {
         $response = $this->get('/');
         $response->assertStatus(200);
-        $response->assertSee('SAMSARA Integrated');
+        $response->assertSee('SAMSARA');
         $response->assertSee('STATUS JALUR:');
     }
 

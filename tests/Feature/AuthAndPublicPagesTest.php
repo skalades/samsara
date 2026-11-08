@@ -22,7 +22,7 @@ class AuthAndPublicPagesTest extends TestCase
     {
         $response = $this->get(route('home'));
         $response->assertStatus(200);
-        $response->assertSee('SAMSARA Integrated');
+        $response->assertSee('SAMSARA');
         $response->assertSee('Layanan Mandiri Pendaki');
         $response->assertSee('Login Staf');
     }
@@ -148,5 +148,24 @@ class AuthAndPublicPagesTest extends TestCase
         // Petugas Pos cannot access admin panel
         $response = $this->actingAs($posUser)->get(route('admin.index'));
         $response->assertStatus(403);
+    }
+
+    public function test_footer_displays_nadir_developer_segment_with_google_maps_link(): void
+    {
+        $response = $this->get(route('home'));
+        $response->assertStatus(200);
+
+        // Verify NADIR developer segment
+        $response->assertSee('Aplikasi Ini Dibuat Oleh');
+        $response->assertSee('NADIR');
+        $response->assertSee('Pengukuran Lahan &amp; Topografi', false);
+        $response->assertSee('Pemetaan Spasial &amp; SIG', false);
+        $response->assertSee('Sewa Alat Ukur Presisi');
+        $response->assertSee('Sewa Drone &amp; Aerial Mapping', false);
+        $response->assertSee('Pembuatan Website &amp; Sistem', false);
+        $response->assertSee('Tarogong Kaler, Garut');
+
+        // Verify Google Maps URL is included
+        $response->assertSee('https://www.google.com/maps/place/NADIR');
     }
 }

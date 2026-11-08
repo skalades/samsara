@@ -67,7 +67,9 @@
         <!-- MINIMAL ADMIN FOOTER -->
         <footer class="px-4 sm:px-6 lg:px-8 py-4 border-t border-slate-200 bg-white text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2 shrink-0">
             <div>
-                &copy; {{ date('Y') }} <strong>Basecamp SAMSARA</strong> &bull; Sistem Informasi Manajemen SIMS v1.4.0
+                &copy; {{ date('Y') }} <strong>Basecamp SAMSARA</strong> &bull; SIMS v1.4.0
+                <span class="text-slate-300 mx-1">&bull;</span>
+                Dibuat oleh <a href="https://www.google.com/maps/place/NADIR+%7C+JASA+PENGUKURAN+LAHAN,+TOPOGRAFI,+PEMETAAN,+SEWA+ALAT+UKUR,+SEWA+DRONE,+PEMBUATAN+WEBSITE+%7C+NADIR/@-7.1668405,107.9054155,1403m/data=!3m2!1e3!4b1!4m6!3m5!1s0x2e68b1bcd5258c47:0x3c5a9d384d5b572f!8m2!3d-7.1668458!4d107.9079904!16s%2Fg%2F11z8rp2yc2!5m1!1e1?entry=ttu&g_ep=EgoyMDI2MTEwMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="text-emerald-700 hover:text-emerald-900 font-semibold hover:underline inline-flex items-center gap-1">NADIR <i class="fas fa-arrow-up-right-from-square text-[9px]"></i></a>
             </div>
             <div class="flex items-center gap-3 text-[11px] text-emerald-800 font-semibold">
                 <span class="inline-flex items-center gap-1.5"><i class="fas fa-mountain text-[#D97736]"></i> Gunung Cikuray 2.821 MDPL</span>
