@@ -100,8 +100,10 @@
                 <span class="hidden md:inline mx-1.5 text-white/30">&bull;</span>
                 <span class="block md:inline mt-1 md:mt-0 text-[11px] text-white/60">
                     Aplikasi ini dirancang & dikembangkan oleh
-                    <a href="{{ $nadirMapsUrl }}" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 font-bold hover:underline inline-flex items-center gap-1">
-                        NADIR <i class="fas fa-arrow-up-right-from-square text-[9px]"></i>
+                    <a href="{{ $nadirMapsUrl }}" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 font-bold hover:underline inline-flex items-center gap-1.5">
+                        <img src="{{ asset('assets/logo-nadir.png') }}" alt="NADIR Logo" class="w-4 h-4 object-contain inline-block">
+                        <span>NADIR</span>
+                        <i class="fas fa-arrow-up-right-from-square text-[9px]"></i>
                     </a>
                 </span>
             </div>

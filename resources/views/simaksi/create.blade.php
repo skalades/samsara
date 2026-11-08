@@ -173,10 +173,19 @@
                                     </div>
                                 </div>
 
-                                <div class="sm:col-span-4">
-                                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Riwayat Medis / Alergi / Penyakit (Sangat penting untuk SAR)</label>
-                                    <input type="text" :name="'members['+idx+'][medical_history]'" x-model="member.medical_history" placeholder="Contoh: Asma ringan, alergi dingin, atau 'Tidak ada riwayat'"
-                                        class="touch-target w-full rounded-xl border border-slate-300 px-3 py-1.5 text-xs text-slate-900 bg-white">
+                                <div class="sm:col-span-4 bg-amber-50/70 p-3 rounded-2xl border border-amber-200/80">
+                                    <label class="block text-xs font-bold text-amber-950 mb-1 flex items-center justify-between">
+                                        <span class="flex items-center gap-1.5">
+                                            <i class="fas fa-heartbeat text-rose-500"></i>
+                                            <span>Riwayat Penyakit Bawaan / Medis / Alergi</span>
+                                        </span>
+                                        <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-rose-100 text-rose-700">Wajib SAR</span>
+                                    </label>
+                                    <input type="text" :name="'members['+idx+'][medical_history]'" x-model="member.medical_history" placeholder="Contoh: Asma ringan, alergi dingin, riwayat cedera lutut, atau isi 'Sehat'"
+                                        class="touch-target w-full rounded-xl border border-amber-300 px-3 py-2 text-xs text-slate-900 bg-white focus:ring-1 focus:ring-amber-500">
+                                    <p class="text-[10px] text-amber-900/70 mt-1 leading-tight">
+                                        *Tuliskan riwayat penyakit bawaan atau obat pribadi yang dibawa demi keselamatan pendakian. Jika sehat tanpa riwayat, cukup isi <strong>"Sehat"</strong>.
+                                    </p>
                                 </div>
                             </div>
                         </div>

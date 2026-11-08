@@ -370,6 +370,17 @@
                                 </button>
                             </div>
 
+                            <!-- Column labels for quick scanning by admin -->
+                            <div class="hidden sm:flex items-center gap-2 px-2.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                                <span class="w-6 text-center">#</span>
+                                <span class="flex-1 min-w-[140px]">Nama Lengkap *</span>
+                                <span class="w-32">NIK KTP</span>
+                                <span class="w-16">L/P</span>
+                                <span class="w-16">Usia</span>
+                                <span class="flex-1 min-w-[120px] text-rose-700"><i class="fas fa-heartbeat mr-0.5"></i> Penyakit Bawaan</span>
+                                <span class="w-6"></span>
+                            </div>
+
                             <div class="space-y-2">
                                 <template x-for="(m, idx) in members" :key="idx">
                                     <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex flex-wrap sm:flex-nowrap items-center gap-2">
@@ -390,7 +401,7 @@
                                             <input type="number" :name="'members[' + idx + '][age]'" x-model.number="m.age" min="10" max="80" placeholder="Usia" class="w-full text-xs rounded-lg border border-slate-300 px-1 py-1.5 bg-white">
                                         </div>
                                         <div class="flex-1 min-w-[120px]">
-                                            <input type="text" :name="'members[' + idx + '][medical_history]'" x-model="m.medical_history" placeholder="Riwayat Medis (Sehat)" class="w-full text-xs rounded-lg border border-slate-300 px-2 py-1.5 bg-white">
+                                            <input type="text" :name="'members[' + idx + '][medical_history]'" x-model="m.medical_history" placeholder="Penyakit Bawaan (Sehat)" class="w-full text-xs rounded-lg border border-slate-300 px-2 py-1.5 bg-white">
                                         </div>
                                         <button type="button" x-show="members.length > 1" @click="removeMember(idx)" class="text-rose-500 hover:text-rose-700 p-1.5 shrink-0 cursor-pointer">
                                             <i class="fas fa-trash-alt text-xs"></i>

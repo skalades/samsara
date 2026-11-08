@@ -38,8 +38,8 @@
     <!-- Compact developer bar for smaller contexts -->
     <div class="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-xl bg-[#12241B] border border-[#2D5841] text-xs">
         <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-lg bg-[#D97736] text-white flex items-center justify-center font-bold font-heading text-sm shadow-xs">
-                N
+            <div class="w-9 h-9 rounded-xl bg-white/10 p-1 flex items-center justify-center border border-white/20 shadow-xs shrink-0 backdrop-blur-xs">
+                <img src="{{ asset('assets/logo-nadir.png') }}" alt="Logo NADIR" class="w-full h-full object-contain">
             </div>
             <div>
                 <div class="text-white font-semibold">Dibuat oleh <strong class="text-amber-400">NADIR</strong></div>
@@ -73,8 +73,8 @@
                     </div>
 
                     <div class="flex items-center gap-3 pt-0.5">
-                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-[#D97736] to-[#B25A20] text-white flex items-center justify-center font-heading font-black text-xl shadow-md ring-1 ring-amber-400/40 shrink-0">
-                            N
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/10 p-1.5 flex items-center justify-center border border-white/20 shadow-md ring-1 ring-amber-400/30 shrink-0 backdrop-blur-xs">
+                            <img src="{{ asset('assets/logo-nadir.png') }}" alt="Logo NADIR" class="w-full h-full object-contain">
                         </div>
                         <div>
                             <h3 class="font-heading font-extrabold text-lg sm:text-xl text-white tracking-wide flex items-center gap-2">
