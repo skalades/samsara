@@ -1,4 +1,4 @@
-<div class="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-9 shadow-sm mb-12 scroll-mt-24" id="kalkulator-biaya"
+<div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs mb-12 scroll-mt-24" id="kalkulator-biaya"
      x-data="{
          climbers: 4,
          isWna: false,
@@ -220,7 +220,7 @@
         </div>
 
         <!-- Live Receipt Breakdown Column (5 Cols) -->
-        <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 to-[#12241B] text-white p-6 rounded-3xl border border-emerald-800/80 shadow-xl space-y-4">
+        <div class="lg:col-span-5 bg-[#111E17] text-white p-6 rounded-2xl border border-[#2D5841] shadow-md space-y-4">
             <div class="flex items-center justify-between border-b border-white/15 pb-4">
                 <div>
                     <span class="text-[10px] font-bold uppercase tracking-wider text-amber-300">Rincian Estimasi Biaya</span>
@@ -276,7 +276,7 @@
             <!-- Action Buttons -->
             <div class="pt-2 space-y-2">
                 <a href="{{ route('simaksi.create') }}"
-                   class="touch-target w-full py-3.5 rounded-xl bg-gradient-to-r from-[#D97736] to-amber-600 hover:from-[#B25A20] hover:to-[#D97736] text-white font-bold text-xs sm:text-sm tracking-wide transition shadow-lg flex items-center justify-center gap-2 active:scale-95">
+                   class="touch-target w-full py-3 rounded-lg bg-[#D97736] hover:bg-[#B25A20] text-white font-bold text-xs sm:text-sm tracking-wide transition flex items-center justify-center gap-2 active:scale-95">
                     <i class="fas fa-ticket-alt"></i> Langsung Booking SIMAKSI
                 </a>
 

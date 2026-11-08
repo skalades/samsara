@@ -1,4 +1,4 @@
-<div class="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-9 shadow-sm mb-12 scroll-mt-24" id="sop-checklist"
+<div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs mb-12 scroll-mt-24" id="sop-checklist"
      x-data="{
          items: [
              { id: 0, name: 'Sepatu gunung dengan sol bergerigi tebal (Grip tanah akar)', tag: 'Wajib', tagColor: 'bg-rose-100 text-rose-800 border-rose-200', checked: true },

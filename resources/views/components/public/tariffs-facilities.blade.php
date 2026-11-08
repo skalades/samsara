@@ -1,6 +1,6 @@
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-14 scroll-mt-24" id="tarif-fasilitas">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-12 scroll-mt-24" id="tarif-fasilitas">
     <!-- Tabel Tarif Resmi -->
-    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-sm flex flex-col justify-between">
+    <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs flex flex-col justify-between">
         <div>
             <div class="flex items-center justify-between mb-4">
                 <div>
@@ -55,23 +55,23 @@
             </div>
         </div>
 
-        <div class="mt-5 p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-center gap-2">
+        <div class="mt-5 p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-center gap-2">
             <i class="fas fa-qrcode text-[#D97736] text-base shrink-0"></i>
             <span>Mendukung pembayaran non-tunai via <strong>QRIS (BCA, Mandiri, BRI, GoPay, OVO, ShopeePay)</strong> serta Tunai di Loket.</span>
         </div>
     </div>
 
     <!-- Fasilitas Basecamp Cigedug -->
-    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-sm flex flex-col justify-between">
+    <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs flex flex-col justify-between">
         <div>
             <span class="text-[11px] font-extrabold uppercase tracking-widest text-[#D97736]">Kenyamanan Pendaki</span>
             <h3 class="font-heading font-extrabold text-xl text-slate-900 mb-4">Fasilitas Lengkap Basecamp SAMSARA</h3>
 
             <div class="grid grid-cols-2 gap-3 text-xs">
-                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
                     <i class="fas fa-mosque text-emerald-600 text-base mt-0.5 shrink-0"></i>
                     <div>
-                        <h4 class="font-bold text-slate-800">Musholla Bersih</h4>
+                        <h4 class="font-semibold text-slate-800">Musholla Bersih</h4>
                         <p class="text-[11px] text-slate-500 mt-0.5 leading-relaxed">Tersedia sajadah, mukena, dan tempat wudhu luas.</p>
                     </div>
                 </div>

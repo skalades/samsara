@@ -2,28 +2,28 @@
     
     <!-- IF AUTHENTICATED STAFF: SHOW COMPACT STAFF QUICK BAR (NOT SHOWN TO PUBLIC) -->
     @auth
-        <div class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-[#1E3A2B] to-[#12241B] text-white border border-[#2D5841] shadow-lg flex flex-wrap items-center justify-between gap-3">
+        <div class="mb-6 p-3.5 sm:p-4 rounded-xl bg-[#111E17] text-white border border-[#2D5841] flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#D97736] to-amber-600 flex items-center justify-center text-white text-base shadow-md">
+                <div class="w-9 h-9 rounded-lg bg-[#D97736] flex items-center justify-center text-white text-sm shadow-xs">
                     <i class="fas fa-id-badge"></i>
                 </div>
                 <div>
-                    <div class="text-xs text-emerald-200">Sesi Staf Aktif: <strong class="text-white">{{ auth()->user()->name }}</strong></div>
-                    <div class="text-xs font-bold text-amber-300">{{ auth()->user()->role->label() }}</div>
+                    <div class="text-xs text-white/80">Sesi Staf: <strong class="text-white">{{ auth()->user()->name }}</strong></div>
+                    <div class="text-[11px] font-semibold text-amber-300">{{ auth()->user()->role->label() }}</div>
                 </div>
             </div>
             <div>
                 @php $role = auth()->user()->role->value; @endphp
                 @if ($role === 'SUPERADMIN' || $role === 'ADMIN_SAR')
-                    <a href="{{ route('admin.index') }}" class="touch-target px-4 py-2 rounded-xl bg-[#D97736] hover:bg-[#B25A20] text-white text-xs font-bold transition inline-flex items-center gap-2 shadow-sm">
+                    <a href="{{ route('admin.index') }}" class="touch-target px-3.5 py-1.5 rounded-lg bg-[#D97736] hover:bg-[#B25A20] text-white text-xs font-semibold transition inline-flex items-center gap-1.5 shadow-xs">
                         <i class="fas fa-gauge-high"></i> Buka Command Center Admin
                     </a>
                 @elseif ($role === 'KASIR')
-                    <a href="{{ route('pos.index') }}" class="touch-target px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold transition inline-flex items-center gap-2 shadow-sm">
+                    <a href="{{ route('pos.index') }}" class="touch-target px-3.5 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold transition inline-flex items-center gap-1.5 shadow-xs">
                         <i class="fas fa-cash-register"></i> Buka Kasir POS Basecamp
                     </a>
                 @elseif ($role === 'PETUGAS_POS')
-                    <a href="{{ route('fieldops.index') }}" class="touch-target px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold transition inline-flex items-center gap-2 shadow-sm">
+                    <a href="{{ route('fieldops.index') }}" class="touch-target px-3.5 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-xs font-semibold transition inline-flex items-center gap-1.5 shadow-xs">
                         <i class="fas fa-qrcode"></i> Buka Scanner PWA Pos 1-4
                     </a>
                 @endif

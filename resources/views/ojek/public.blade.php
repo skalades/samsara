@@ -16,23 +16,23 @@
         </div>
 
         <!-- TICKET CHECKER CARD -->
-        <div class="bg-gradient-to-br from-[#1E3A2B] via-[#152e21] to-[#0c1c14] text-white rounded-3xl p-6 sm:p-9 border border-[#2D5841] shadow-xl mb-12">
+        <div class="bg-[#111E17] text-white rounded-2xl p-6 sm:p-8 border border-[#2D5841] shadow-sm mb-10">
             <div class="max-w-xl mx-auto text-center">
-                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-xs font-bold border border-amber-400/30 mb-3">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-amber-400/20 text-amber-300 text-xs font-semibold mb-2">
                     <i class="fas fa-search text-amber-400"></i> Cek Status Antrean Saya
                 </span>
-                <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-white">
+                <h2 class="font-heading font-extrabold text-2xl text-white">
                     Punya Tiket Ojek dari Kasir / Web?
                 </h2>
-                <p class="text-xs sm:text-sm text-slate-300 mt-1 mb-6">
+                <p class="text-xs text-white/70 mt-1 mb-5">
                     Masukkan nomor tiket ojek Anda (misal: <strong class="text-amber-300 font-mono">OJ-261101-001</strong>) untuk melihat posisi antrean & driver yang menjemput.
                 </p>
 
-                <form @submit.prevent="checkTicket()" class="flex flex-col sm:flex-row gap-2.5">
+                <form @submit.prevent="checkTicket()" class="flex flex-col sm:flex-row gap-2">
                     <input type="text" x-model="ticketCode" placeholder="Contoh: OJ-261101-002" required
-                           class="flex-1 rounded-2xl bg-white/10 border border-white/20 px-4 py-3.5 text-sm sm:text-base text-white placeholder-slate-400 font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-[#D97736]">
+                           class="flex-1 rounded-xl bg-white/10 border border-white/20 px-3.5 py-2.5 text-sm text-white placeholder-slate-400 font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-[#D97736]">
                     <button type="submit" :disabled="loading"
-                            class="touch-target px-6 py-3.5 rounded-2xl bg-[#D97736] hover:bg-[#c26527] disabled:opacity-50 text-white font-heading font-bold text-sm sm:text-base shadow-lg transition active:scale-95 flex items-center justify-center gap-2">
+                            class="touch-target px-5 py-2.5 rounded-xl bg-[#D97736] hover:bg-[#c26527] disabled:opacity-50 text-white font-semibold text-xs sm:text-sm shadow-xs transition active:scale-95 flex items-center justify-center gap-2">
                         <i class="fas fa-arrow-right" :class="{ 'animate-spin': loading }"></i>
                         <span>Cek Antrean</span>
                     </button>

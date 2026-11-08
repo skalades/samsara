@@ -26,12 +26,12 @@
              x-transition:leave-start="opacity-100 scale-100"
              x-transition:leave-end="opacity-0 scale-95"
              @click.stop
-             class="relative transform overflow-hidden rounded-3xl bg-slate-900 text-white text-left shadow-2xl transition-all w-full max-w-4xl border border-white/20">
+             class="relative transform overflow-hidden rounded-2xl bg-slate-900 text-white text-left shadow-2xl transition-all w-full max-w-4xl border border-white/10">
 
             <!-- Close Button -->
             <button type="button" @click="open = false"
-                    class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white transition flex items-center justify-center cursor-pointer border border-white/20">
-                <i class="fas fa-times text-base"></i>
+                    class="absolute top-4 right-4 z-20 w-8 h-8 rounded-lg bg-black/60 hover:bg-black/80 text-white transition flex items-center justify-center cursor-pointer border border-white/20">
+                <i class="fas fa-times text-xs"></i>
             </button>
 
             <!-- Large Photo -->

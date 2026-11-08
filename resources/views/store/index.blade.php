@@ -16,8 +16,13 @@
             if (existing) {
                 if (existing.qty < product.stock) {
                     existing.qty++;
+                    window.dispatchEvent(new CustomEvent('notify', {
+                        detail: { message: '+1 ' + product.name + ' ditambahkan ke keranjang', type: 'success' }
+                    }));
                 } else {
-                    alert('Stok maksimal telah tercapai!');
+                    window.dispatchEvent(new CustomEvent('notify', {
+                        detail: { message: 'Stok maksimal telah tercapai (' + product.stock + ' unit)', type: 'warning' }
+                    }));
                 }
             } else {
                 this.cart.push({
@@ -28,6 +33,9 @@
                     stock: product.stock,
                     qty: 1
                 });
+                window.dispatchEvent(new CustomEvent('notify', {
+                    detail: { message: product.name + ' ditambahkan ke keranjang', type: 'success' }
+                }));
             }
         },
         removeFromCart(id) {
@@ -67,10 +75,10 @@
             <!-- Header Action Controls -->
             <div class="flex items-center gap-3">
                 <button type="button" @click="showCartModal = true"
-                        class="touch-target px-4 py-2.5 rounded-2xl bg-[#D97736] hover:bg-[#B25A20] text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer active:scale-95">
+                        class="touch-target px-4 py-2.5 rounded-xl bg-[#D97736] hover:bg-[#B25A20] text-white font-semibold text-xs sm:text-sm shadow-xs transition flex items-center justify-center gap-2 cursor-pointer active:scale-95">
                     <i class="fas fa-shopping-basket"></i>
                     <span>Keranjang</span>
-                    <span x-show="cartCount > 0" class="px-2 py-0.5 rounded-full bg-white text-[#D97736] text-xs font-black" x-text="cartCount"></span>
+                    <span x-show="cartCount > 0" class="px-1.5 py-0.5 rounded-full bg-white text-[#D97736] text-[11px] font-bold shadow-2xs" x-text="cartCount"></span>
                 </button>
             </div>
         </div>
@@ -93,7 +101,7 @@
                 </div>
             </div>
 
-            <!-- CATEGORY & INVENTORY TYPE FILTER PILLS (Fixed with shrink-0 to prevent overlapping) -->
+            <!-- CATEGORY & INVENTORY TYPE FILTER PILLS -->
             <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar text-xs font-bold">
                 <a href="{{ route('store.index') }}"
                    class="px-4 py-2.5 rounded-xl shrink-0 whitespace-nowrap transition shadow-2xs {{ $category === 'ALL' && $inventoryType === 'ALL' ? 'bg-[#1E3A2B] text-white shadow-md' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50' }}">
@@ -126,18 +134,18 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-20 md:mb-8">
             @forelse ($products as $product)
                 <div x-show="!search || '{{ strtolower($product->name . ' ' . $product->sku . ' ' . ($product->mitra ? $product->mitra->name : '')) }}'.includes(search.toLowerCase())"
-                     class="bg-white rounded-2xl border border-slate-200/90 shadow-2xs overflow-hidden flex flex-col justify-between p-3.5 hover:shadow-md hover:border-slate-300 transition duration-150">
+                     class="bg-white rounded-3xl border border-slate-200/90 shadow-2xs overflow-hidden flex flex-col justify-between p-4 hover:shadow-md hover:border-slate-300 transition duration-150">
                     <div>
                         <!-- Type Badge & Category -->
                         <div class="flex items-center justify-between gap-1 mb-2">
                             @if ($product->isConsignment())
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200 truncate">
-                                    <i class="fas fa-handshake mr-0.5"></i> UMKM
-                                </span>
+                                <x-ui.badge color="amber" size="sm">
+                                    <i class="fas fa-handshake mr-1"></i> UMKM
+                                </x-ui.badge>
                             @else
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 truncate">
+                                <x-ui.badge color="emerald" size="sm">
                                     Beli Putus
-                                </span>
+                                </x-ui.badge>
                             @endif
 
                             <span class="text-[10px] font-bold text-slate-400 font-mono">
@@ -146,7 +154,7 @@
                         </div>
 
                         <!-- Product Name -->
-                        <h3 class="font-heading font-bold text-xs sm:text-sm text-slate-900 leading-snug line-clamp-2">
+                        <h3 class="font-heading font-extrabold text-xs sm:text-sm text-slate-900 leading-snug line-clamp-2">
                             {{ $product->name }}
                         </h3>
 
@@ -156,7 +164,7 @@
                             </div>
                         @endif
 
-                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2">
+                        <p class="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
                             {{ $product->description }}
                         </p>
                     </div>
@@ -167,7 +175,7 @@
                                 Rp {{ number_format($product->selling_price, 0, ',', '.') }}
                             </span>
 
-                            <span class="text-[10px] {{ $product->isLowStock() ? 'text-rose-600 font-bold' : 'text-slate-400' }}">
+                            <span class="text-[10px] font-medium {{ $product->isLowStock() ? 'text-rose-600 font-bold' : 'text-slate-400' }}">
                                 Stok: {{ $product->stock }}
                             </span>
                         </div>
@@ -211,9 +219,16 @@
                     </div>
                 </div>
             @empty
-                <div class="col-span-full py-12 text-center bg-white rounded-3xl border border-slate-200 text-slate-500 text-sm">
-                    <i class="fas fa-box-open text-3xl text-slate-300 mb-2"></i>
-                    <p>Tidak ada produk yang cocok dengan kategori yang dipilih.</p>
+                <div class="col-span-full">
+                    <x-ui.empty-state
+                        icon="fas fa-box-open"
+                        title="Produk Tidak Ditemukan"
+                        description="Tidak ada perlengkapan yang cocok dengan kategori atau pencarian yang dipilih."
+                    >
+                        <a href="{{ route('store.index') }}" class="touch-target px-4 py-2 rounded-xl bg-[#1E3A2B] text-white text-xs font-bold shadow-xs">
+                            Reset Semua Filter
+                        </a>
+                    </x-ui.empty-state>
                 </div>
             @endforelse
         </div>
@@ -242,106 +257,89 @@
             </button>
         </div>
 
-        <!-- PRE-ORDER BOTTOM DRAWER / MODAL -->
-        <div x-show="showCartModal" x-cloak class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div x-show="showCartModal" @click="showCartModal = false" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"></div>
-
-                <div x-show="showCartModal" class="inline-block align-bottom bg-white rounded-t-3xl sm:rounded-3xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full border border-slate-200">
-                    <form action="{{ route('store.preorder') }}" method="POST">
-                        @csrf
-                        <div class="p-5 sm:p-6">
-                            <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-                                <div class="flex items-center gap-2.5">
-                                    <div class="w-8 h-8 rounded-lg bg-[#D97736] text-white flex items-center justify-center text-sm font-bold">
-                                        <i class="fas fa-shopping-cart"></i>
-                                    </div>
-                                    <h3 class="font-heading font-extrabold text-base text-slate-900">Pre-Order Keranjang</h3>
+        <!-- REUSABLE MODULAR BOTTOM SHEET FOR CART CHECKOUT (PRD 2.5) -->
+        <x-ui.bottom-sheet show="showCartModal" title="Keranjang Pre-Order" subtitle="Ambil Cepat di Kasir Basecamp Cigedug" icon="fas fa-shopping-basket">
+            <form action="{{ route('store.preorder') }}" method="POST">
+                @csrf
+                <div class="space-y-4">
+                    <!-- Items List -->
+                    <div class="space-y-2 max-h-52 overflow-y-auto slim-scrollbar pr-1">
+                        <template x-for="item in cart" :key="item.id">
+                            <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-200/80 text-xs">
+                                <div class="flex-1 pr-2">
+                                    <div class="font-bold text-slate-800" x-text="item.name"></div>
+                                    <div class="text-[11px] text-[#D97736] font-semibold" x-text="formatRupiah(item.price)"></div>
                                 </div>
-                                <button type="button" @click="showCartModal = false" class="text-slate-400 hover:text-slate-600 text-sm cursor-pointer">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
 
-                            <!-- Cart Items List -->
-                            <div class="space-y-2.5 max-h-56 overflow-y-auto mb-4 pr-1">
-                                <template x-for="item in cart" :key="item.id">
-                                    <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between text-xs">
-                                        <div class="flex-1 pr-2">
-                                            <div class="font-bold text-slate-800" x-text="item.name"></div>
-                                            <div class="text-[11px] text-[#D97736] font-semibold" x-text="formatRupiah(item.price)"></div>
-                                        </div>
-
-                                        <div class="flex items-center gap-2">
-                                            <button type="button" @click="updateQty(item.id, -1)" class="w-6 h-6 rounded bg-white border border-slate-300 text-slate-600 flex items-center justify-center font-bold hover:bg-slate-100 cursor-pointer">-</button>
-                                            <span class="font-bold text-slate-900 w-5 text-center" x-text="item.qty"></span>
-                                            <button type="button" @click="updateQty(item.id, 1)" class="w-6 h-6 rounded bg-white border border-slate-300 text-slate-600 flex items-center justify-center font-bold hover:bg-slate-100 cursor-pointer">+</button>
-                                            <button type="button" @click="removeFromCart(item.id)" class="text-rose-500 hover:text-rose-700 ml-1 cursor-pointer">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </template>
-
-                                <div x-show="cart.length === 0" class="text-center py-6 text-slate-400 text-xs">
-                                    Keranjang Anda masih kosong. Silakan pilih produk terlebih dahulu.
+                                <div class="flex items-center gap-2">
+                                    <button type="button" @click="updateQty(item.id, -1)" class="w-7 h-7 rounded-lg bg-white border border-slate-300 text-slate-600 flex items-center justify-center font-bold hover:bg-slate-100 cursor-pointer text-xs">-</button>
+                                    <span class="font-bold text-slate-900 w-6 text-center" x-text="item.qty"></span>
+                                    <button type="button" @click="updateQty(item.id, 1)" class="w-7 h-7 rounded-lg bg-white border border-slate-300 text-slate-600 flex items-center justify-center font-bold hover:bg-slate-100 cursor-pointer text-xs">+</button>
+                                    <button type="button" @click="removeFromCart(item.id)" class="text-rose-500 hover:text-rose-700 ml-1 cursor-pointer p-1">
+                                        <i class="fas fa-trash-alt text-xs"></i>
+                                    </button>
                                 </div>
                             </div>
+                        </template>
 
-                            <!-- Customer Input Fields -->
-                            <div class="space-y-3 pt-3 border-t border-slate-100 text-xs">
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Nama Pemesan</label>
-                                    <input type="text" name="customer_name" required placeholder="Nama lengkap pendaki"
-                                        class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1E3A2B]">
-                                </div>
+                        <div x-show="cart.length === 0" class="text-center py-6 text-slate-400 text-xs">
+                            Keranjang Anda masih kosong. Silakan pilih produk terlebih dahulu.
+                        </div>
+                    </div>
 
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div>
-                                        <label class="block font-semibold text-slate-700 mb-1">No. WhatsApp</label>
-                                        <input type="tel" name="customer_phone" required placeholder="08xxxxxxxxxx"
-                                            class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1E3A2B]">
-                                    </div>
-                                    <div>
-                                        <label class="block font-semibold text-slate-700 mb-1">Kode Booking (Opsional)</label>
-                                        <input type="text" name="booking_code" placeholder="SMX-xxxxxx"
-                                            class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs text-slate-900 uppercase focus:outline-none focus:ring-2 focus:ring-[#1E3A2B]">
-                                    </div>
-                                </div>
+                    <!-- Customer Input Fields -->
+                    <div class="space-y-3 pt-3 border-t border-slate-100">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Nama Pemesan <span class="text-rose-500">*</span></label>
+                            <input type="text" name="customer_name" required placeholder="Nama lengkap pendaki"
+                                   class="touch-target w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1E3A2B]">
+                        </div>
 
-                                <div>
-                                    <label class="block font-semibold text-slate-700 mb-1">Metode Pembayaran</label>
-                                    <select name="payment_method" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1E3A2B]">
-                                        <option value="QRIS">QRIS Dinamis (Instan Semua E-Wallet & Bank)</option>
-                                        <option value="CASH">Bayar Tunai di Loket Kasir saat Ambil</option>
-                                        <option value="TRANSFER">Transfer Rekening</option>
-                                    </select>
-                                </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">No. WhatsApp <span class="text-rose-500">*</span></label>
+                                <input type="tel" name="customer_phone" required placeholder="08xxxxxxxxxx"
+                                       class="touch-target w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1E3A2B]">
                             </div>
-
-                            <!-- Hidden Form inputs for items -->
-                            <template x-for="(item, idx) in cart" :key="item.id">
-                                <div>
-                                    <input type="hidden" :name="'items['+idx+'][product_id]'" :value="item.id">
-                                    <input type="hidden" :name="'items['+idx+'][qty]'" :value="item.qty">
-                                </div>
-                            </template>
-
-                            <!-- Total & Submit -->
-                            <div class="mt-5 pt-3 border-t border-slate-200 flex items-center justify-between">
-                                <div>
-                                    <span class="text-xs text-slate-500">Total Pre-Order:</span>
-                                    <div class="font-heading font-extrabold text-lg text-[#D97736]" x-text="formatRupiah(cartTotal)"></div>
-                                </div>
-
-                                <button type="submit" :disabled="cart.length === 0" class="touch-target px-5 py-2.5 rounded-xl bg-[#D97736] hover:bg-[#B25A20] disabled:bg-slate-300 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer">
-                                    <i class="fas fa-qrcode"></i> Terbitkan Barcode Pickup
-                                </button>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Kode Booking (Opsional)</label>
+                                <input type="text" name="booking_code" placeholder="SMX-xxxxxx"
+                                       class="touch-target w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs text-slate-900 uppercase focus:outline-none focus:ring-2 focus:ring-[#1E3A2B]">
                             </div>
                         </div>
-                    </form>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Metode Pembayaran</label>
+                            <select name="payment_method" class="touch-target w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1E3A2B]">
+                                <option value="QRIS">QRIS Dinamis (Instan Semua E-Wallet & Bank)</option>
+                                <option value="CASH">Bayar Tunai di Loket Kasir saat Ambil</option>
+                                <option value="TRANSFER">Transfer Rekening</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Hidden Form inputs for items -->
+                    <template x-for="(item, idx) in cart" :key="item.id">
+                        <div>
+                            <input type="hidden" :name="'items['+idx+'][product_id]'" :value="item.id">
+                            <input type="hidden" :name="'items['+idx+'][qty]'" :value="item.qty">
+                        </div>
+                    </template>
+
+                    <!-- Total & Submit -->
+                    <div class="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between gap-3">
+                        <div>
+                            <span class="text-xs text-slate-500">Total Pre-Order:</span>
+                            <div class="font-heading font-extrabold text-lg text-[#D97736]" x-text="formatRupiah(cartTotal)"></div>
+                        </div>
+
+                        <button type="submit" :disabled="cart.length === 0"
+                                class="touch-target px-5 py-2.5 rounded-xl bg-[#D97736] hover:bg-[#B25A20] disabled:bg-slate-300 text-white font-bold text-xs shadow-md transition flex items-center gap-2 cursor-pointer active:scale-95">
+                            <i class="fas fa-qrcode"></i> Terbitkan Barcode Pickup
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </form>
+        </x-ui.bottom-sheet>
     </div>
 </x-layouts.app>

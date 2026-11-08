@@ -2,34 +2,31 @@
     <div class="space-y-6">
 
         <!-- HERO HEADER -->
-        <div class="bg-gradient-to-r from-[#1E3A2B] via-[#244735] to-[#162B20] text-white rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
-            <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
-                <i class="fas fa-campground text-[180px]"></i>
-            </div>
+        <div class="bg-[#111E17] text-white rounded-2xl p-6 sm:p-7 border border-[#2D5841] shadow-xs relative overflow-hidden">
             <div class="relative z-10 max-w-2xl">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#D97736] text-white uppercase tracking-wider mb-3 shadow-sm">
-                    <i class="fas fa-shield-check"></i> Standard QC Basecamp SAMSARA
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-[#D97736] text-white uppercase tracking-wider mb-2">
+                    <i class="fas fa-shield-check"></i> Standard QC Basecamp
                 </span>
-                <h1 class="text-2xl sm:text-4xl font-extrabold font-heading tracking-tight leading-tight">
+                <h1 class="text-2xl sm:text-3xl font-extrabold font-heading tracking-tight leading-tight">
                     Sewa Perlengkapan Outdoor Gunung Cikuray
                 </h1>
-                <p class="mt-2 text-sm sm:text-base text-emerald-100/90 leading-relaxed">
+                <p class="mt-1.5 text-xs sm:text-sm text-white/70 leading-relaxed">
                     Daki lebih ringan tanpa ribet bawa beban berat dari rumah. Seluruh alat sewa telah melewati inspeksi kebersihan dan kelayakan teknis sebelum diserahkan.
                 </p>
 
                 <!-- Quick Stats Badges -->
-                <div class="mt-5 flex flex-wrap gap-3 text-xs">
-                    <div class="bg-white/10 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/15 flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span>Unit Siap Sewa: <strong class="text-white font-bold">{{ $totalAvailable }} dari {{ $totalItems }}</strong></span>
+                <div class="mt-4 flex flex-wrap gap-2 text-xs">
+                    <div class="bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="text-white/80">Unit Siap: <strong class="text-white">{{ $totalAvailable }} / {{ $totalItems }}</strong></span>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/15 flex items-center gap-2">
+                    <div class="bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
                         <i class="fas fa-id-card text-[#D97736]"></i>
-                        <span>Jaminan: <strong class="text-white font-bold">KTP Asli / Deposit</strong></span>
+                        <span class="text-white/80">Jaminan: <strong class="text-white">KTP / Deposit</strong></span>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/15 flex items-center gap-2">
+                    <div class="bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
                         <i class="fas fa-location-dot text-amber-400"></i>
-                        <span>Pengambilan: <strong class="text-white font-bold">Loket Basecamp Cigedug</strong></span>
+                        <span class="text-white/80">Lokasi: <strong class="text-white">Basecamp Cigedug</strong></span>
                     </div>
                 </div>
             </div>
@@ -182,119 +179,96 @@
                         </div>
                     </div>
                 @empty
-                    <div class="col-span-full py-12 text-center bg-white rounded-2xl border border-slate-200">
-                        <i class="fas fa-campground text-slate-300 text-4xl mb-3"></i>
-                        <p class="text-sm font-semibold text-slate-700">Tidak ada perlengkapan pada kategori ini.</p>
+                    <div class="col-span-full">
+                        <x-ui.empty-state
+                            icon="fas fa-campground"
+                            title="Tidak Ada Perlengkapan di Kategori Ini"
+                            description="Peralatan pada kategori ini sedang tidak tersedia atau habis disewa."
+                        >
+                            <a href="{{ route('rental.catalog', ['category' => 'ALL']) }}" class="touch-target px-4 py-2 rounded-xl bg-[#1E3A2B] text-white text-xs font-bold shadow-xs">
+                                Tampilkan Semua Kategori
+                            </a>
+                        </x-ui.empty-state>
                     </div>
                 @endforelse
             </div>
 
-            <!-- HOW TO RENT / RESERVATION MODAL -->
-            <div x-show="showHowToRentModal" x-cloak class="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
-                <div class="flex items-center justify-center min-h-screen p-4 text-center">
-                    <div x-show="showHowToRentModal" @click="showHowToRentModal = false"
-                         x-transition:enter="ease-out duration-300"
-                         x-transition:enter-start="opacity-0"
-                         x-transition:enter-end="opacity-100"
-                         x-transition:leave="ease-in duration-200"
-                         x-transition:leave-start="opacity-100"
-                         x-transition:leave-end="opacity-0"
-                         class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs"></div>
+            <!-- HOW TO RENT / RESERVATION MODAL (Using Reusable Bottom Sheet) -->
+            <x-ui.bottom-sheet show="showHowToRentModal" title="Reservasi Sewa Alat" icon="fas fa-campground">
+                <div>
+                    <!-- Item Name & Code Subheader -->
+                    <div class="mb-4">
+                        <h4 class="font-heading font-extrabold text-base text-slate-900" x-text="activeItem ? activeItem.name : ''"></h4>
+                        <span class="font-mono text-xs font-bold text-[#D97736]" x-text="activeItem ? 'Kode Aset: ' + activeItem.code : ''"></span>
+                    </div>
 
-                    <div x-show="showHowToRentModal"
-                         x-transition:enter="ease-out duration-300"
-                         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                         x-transition:leave="ease-in duration-200"
-                         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                         class="inline-block bg-white rounded-3xl p-6 sm:p-7 text-left shadow-2xl transform transition-all max-w-lg w-full border border-slate-200 relative z-10">
-
-                        <div class="flex items-start justify-between pb-4 border-b border-slate-100 mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-xl bg-amber-50 text-[#D97736] border border-amber-200 flex items-center justify-center text-lg shrink-0">
-                                    <i class="fas fa-campground"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-heading font-extrabold text-base text-slate-900 leading-tight">
-                                        Reservasi Sewa Alat
-                                    </h3>
-                                    <p class="text-xs text-slate-500" x-text="activeItem ? activeItem.name + ' (' + activeItem.code + ')' : ''"></p>
-                                </div>
-                            </div>
-                            <button type="button" @click="showHowToRentModal = false" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg cursor-pointer">
-                                <i class="fas fa-times text-base"></i>
-                            </button>
+                    <!-- Price Info Card -->
+                    <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 mb-4 text-xs">
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="text-slate-500">Tarif Sewa:</span>
+                            <span class="font-extrabold text-[#1E3A2B]" x-text="'Rp ' + (activeItem ? activeItem.rate : 0) + ' / malam'"></span>
                         </div>
-
-                        <!-- Price Info Card -->
-                        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 mb-4 text-xs">
-                            <div class="flex items-center justify-between mb-1.5">
-                                <span class="text-slate-500">Tarif Sewa:</span>
-                                <span class="font-extrabold text-[#1E3A2B]" x-text="'Rp ' + (activeItem ? activeItem.rate : 0) + ' / malam'"></span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-slate-500">Deposit / Jaminan:</span>
-                                <span class="font-semibold text-slate-700" x-text="'Rp ' + (activeItem ? activeItem.deposit : 0) + ' (atau KTP Asli)'"></span>
-                            </div>
-                        </div>
-
-                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-                            Pilih cara peminjaman yang paling nyaman untuk pendakian Anda:
-                        </p>
-
-                        <!-- Action Options -->
-                        <div class="space-y-3">
-                            <!-- Option 1: Buat Booking SIMAKSI Baru -->
-                            <a href="{{ route('simaksi.create') }}" class="block p-3.5 rounded-2xl border-2 border-emerald-200 bg-emerald-50/50 hover:bg-emerald-50 transition group">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2.5">
-                                        <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-xs shrink-0">
-                                            <i class="fas fa-ticket-alt"></i>
-                                        </div>
-                                        <div>
-                                            <div class="font-heading font-bold text-xs text-slate-900 group-hover:text-emerald-900">
-                                                Booking Bersama Tiket SIMAKSI
-                                            </div>
-                                            <div class="text-[11px] text-slate-500">Belum punya izin simaksi? Daftar online sekaligus sewa alat.</div>
-                                        </div>
-                                    </div>
-                                    <i class="fas fa-chevron-right text-xs text-slate-400 group-hover:text-emerald-700"></i>
-                                </div>
-                            </a>
-
-                            <!-- Option 2: Chat WhatsApp Admin Basecamp -->
-                            <a :href="'https://wa.me/6281223456789?text=' + encodeURIComponent('Halo Basecamp Cigedug SAMSARA, saya ingin reservasi/sewa alat ' + (activeItem ? activeItem.name + ' (Kode ' + activeItem.code + ')' : '') + '. Saya sudah ada jadwal pendakian.')"
-                               target="_blank"
-                               class="block p-3.5 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 transition group">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2.5">
-                                        <div class="w-8 h-8 rounded-lg bg-[#25D366] text-white flex items-center justify-center text-xs shrink-0">
-                                            <i class="fab fa-whatsapp text-sm"></i>
-                                        </div>
-                                        <div>
-                                            <div class="font-heading font-bold text-xs text-slate-900">
-                                                Reservasi Cepat via WhatsApp
-                                            </div>
-                                            <div class="text-[11px] text-slate-500">Sudah daftar SIMAKSI? Konfirmasi ketersediaan alat langsung ke petugas.</div>
-                                        </div>
-                                    </div>
-                                    <i class="fas fa-chevron-right text-xs text-slate-400 group-hover:text-[#25D366]"></i>
-                                </div>
-                            </a>
-
-                            <!-- Option 3: Petugas Kasir / Basecamp -->
-                            @auth
-                                @if(auth()->user()->role?->value === 'STAFF_BASECAMP' || auth()->user()->role?->value === 'SUPERADMIN' || auth()->user()->role?->value === 'PENGELOLA')
-                                    <a href="{{ route('pos.index') }}" class="block p-3 rounded-xl border border-dashed border-amber-300 bg-amber-50/60 hover:bg-amber-100/60 transition text-center text-xs font-bold text-amber-900">
-                                        <i class="fas fa-cash-register mr-1.5 text-[#D97736]"></i> Proses di Layar Kasir POS (Staf Basecamp)
-                                    </a>
-                                @endif
-                            @endauth
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-500">Deposit / Jaminan:</span>
+                            <span class="font-semibold text-slate-700" x-text="'Rp ' + (activeItem ? activeItem.deposit : 0) + ' (atau KTP Asli)'"></span>
                         </div>
                     </div>
+
+                    <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                        Pilih cara peminjaman yang paling nyaman untuk pendakian Anda:
+                    </p>
+
+                    <!-- Action Options -->
+                    <div class="space-y-3">
+                        <!-- Option 1: Buat Booking SIMAKSI Baru -->
+                        <a href="{{ route('simaksi.create') }}" class="block p-3.5 rounded-2xl border-2 border-emerald-200 bg-emerald-50/50 hover:bg-emerald-50 transition group">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-emerald-700 text-white flex items-center justify-center text-xs shrink-0">
+                                        <i class="fas fa-ticket-alt"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-heading font-bold text-xs text-slate-900 group-hover:text-emerald-900">
+                                            Booking Bersama Tiket SIMAKSI
+                                        </div>
+                                        <div class="text-[11px] text-slate-500">Belum punya izin simaksi? Daftar online sekaligus sewa alat.</div>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-right text-xs text-slate-400 group-hover:text-emerald-700"></i>
+                            </div>
+                        </a>
+
+                        <!-- Option 2: Chat WhatsApp Admin Basecamp -->
+                        <a :href="'https://wa.me/6281223456789?text=' + encodeURIComponent('Halo Basecamp Cigedug SAMSARA, saya ingin reservasi/sewa alat ' + (activeItem ? activeItem.name + ' (Kode ' + activeItem.code + ')' : '') + '. Saya sudah ada jadwal pendakian.')"
+                           target="_blank"
+                           class="block p-3.5 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 transition group">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-[#25D366] text-white flex items-center justify-center text-xs shrink-0">
+                                        <i class="fab fa-whatsapp text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-heading font-bold text-xs text-slate-900">
+                                            Reservasi Cepat via WhatsApp
+                                        </div>
+                                        <div class="text-[11px] text-slate-500">Sudah daftar SIMAKSI? Konfirmasi ketersediaan alat langsung ke petugas.</div>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-right text-xs text-slate-400 group-hover:text-[#25D366]"></i>
+                            </div>
+                        </a>
+
+                        <!-- Option 3: Petugas Kasir / Basecamp -->
+                        @auth
+                            @if(auth()->user()->role?->value === 'STAFF_BASECAMP' || auth()->user()->role?->value === 'SUPERADMIN' || auth()->user()->role?->value === 'PENGELOLA' || auth()->user()->role?->value === 'KASIR')
+                                <a href="{{ route('pos.index') }}" class="block p-3 rounded-xl border border-dashed border-amber-300 bg-amber-50/60 hover:bg-amber-100/60 transition text-center text-xs font-bold text-amber-900">
+                                    <i class="fas fa-cash-register mr-1.5 text-[#D97736]"></i> Proses di Layar Kasir POS (Staf Basecamp)
+                                </a>
+                            @endif
+                        @endauth
+                    </div>
                 </div>
-            </div>
+            </x-ui.bottom-sheet>
         </div>
 
         <!-- PROCEDURES & RULES (SOP SEWA ALAT) -->

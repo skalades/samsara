@@ -66,7 +66,7 @@
     {!! $jsonCheckpoints !!}
 </script>
 
-<div class="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-9 shadow-sm mb-12 scroll-mt-24" id="pos-explorer"
+<div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs mb-12 scroll-mt-24" id="pos-explorer"
      x-data="checkpointExplorerComponent('{{ $defaultPos }}')">
 
     <!-- Section Header -->

@@ -8,13 +8,13 @@
             <p class="text-xs sm:text-sm text-slate-500">Pilih tanggal pendakian untuk memeriksa ketersediaan kuota harian via Cigedug.</p>
         </div>
 
-        <a href="{{ route('simaksi.create') }}" class="touch-target px-5 py-3 rounded-2xl bg-[#D97736] hover:bg-[#B25A20] text-white font-bold text-sm tracking-wide shadow-md transition flex items-center justify-center gap-2">
+        <a href="{{ route('simaksi.create') }}" class="touch-target px-4 py-2.5 rounded-xl bg-[#D97736] hover:bg-[#B25A20] text-white font-semibold text-xs sm:text-sm tracking-wide shadow-xs transition flex items-center justify-center gap-2">
             <i class="fas fa-ticket-alt"></i> Langsung Booking Kuota
         </a>
     </div>
 
     <!-- CALENDAR CARD -->
-    <div class="bg-white rounded-3xl border border-slate-200/80 p-5 sm:p-7 shadow-xs mb-8">
+    <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs mb-8">
         <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-emerald-100 text-[#1E3A2B] flex items-center justify-center text-lg">

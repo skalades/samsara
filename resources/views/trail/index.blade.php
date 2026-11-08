@@ -59,7 +59,7 @@
 
     <!-- TECHNICAL STATS CARDS (5 METRICS) -->
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-8">
-        <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col justify-between">
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between">
             <div>
                 <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Puncak Tertinggi</span>
                 <span class="font-heading font-extrabold text-2xl text-[#D97736] mt-1 block">2.821 <span class="text-xs font-semibold text-slate-600">MDPL</span></span>
@@ -67,7 +67,7 @@
             <p class="text-[11px] text-slate-500 mt-2">Atap Garut &bull; Panorama 360°</p>
         </div>
 
-        <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col justify-between">
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between">
             <div>
                 <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Panjang Trek</span>
                 <span class="font-heading font-extrabold text-2xl text-slate-800 mt-1 block">6.8 <span class="text-xs font-semibold text-slate-600">KM</span></span>
@@ -75,7 +75,7 @@
             <p class="text-[11px] text-slate-500 mt-2">Basecamp s/d Tugu Puncak</p>
         </div>
 
-        <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col justify-between">
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between">
             <div>
                 <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Elevasi Gain</span>
                 <span class="font-heading font-extrabold text-2xl text-emerald-700 mt-1 block">+1.576 <span class="text-xs font-semibold text-slate-600">M</span></span>
@@ -83,7 +83,7 @@
             <p class="text-[11px] text-slate-500 mt-2">Gradien tanjakan konstan 28°</p>
         </div>
 
-        <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col justify-between">
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between">
             <div>
                 <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Estimasi Waktu</span>
                 <span class="font-heading font-extrabold text-2xl text-slate-800 mt-1 block">4.5 &ndash; 6 <span class="text-xs font-semibold text-slate-600">Jam</span></span>
@@ -91,7 +91,7 @@
             <p class="text-[11px] text-slate-500 mt-2">Ritme trekking normal</p>
         </div>
 
-        <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex flex-col justify-between col-span-2 sm:col-span-1">
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between col-span-2 sm:col-span-1">
             <div>
                 <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">Titik Sumber Air</span>
                 <span class="font-heading font-extrabold text-sm sm:text-base text-sky-700 mt-1 block flex items-center gap-1.5">
@@ -105,7 +105,7 @@
     </div>
 
     <!-- MAIN LEAFLET MAP & INTERACTIVE CONTROLS CARD -->
-    <div class="bg-white rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden mb-10 scroll-mt-24" id="peta-gps">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden mb-10 scroll-mt-24" id="peta-gps">
         <!-- Map Control Bar (Layers & Checkpoint Quick Focus) -->
         <div class="p-3.5 sm:p-4 bg-slate-950 text-white flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-800">
             <!-- Left: Map Layer Switcher -->
@@ -215,7 +215,7 @@
     </div>
 
     <!-- CHECKPOINT & POS EXPLORER SECTION (AUTHENTIC FIELD DOCUMENTATION) -->
-    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-9 shadow-sm mb-12 scroll-mt-24" id="pos-explorer"
+    <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs mb-12 scroll-mt-24" id="pos-explorer"
          x-data="{
              activePos: '{{ $targetPos !== 'all' ? $targetPos : 'pos4' }}',
              checkpoints: {{ json_encode($checkpoints) }},
@@ -349,7 +349,7 @@
     </div>
 
     <!-- DOWNLOAD GPS FILES CENTER SECTION (3 KML/GPX FILES) -->
-    <div class="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-3xl p-6 sm:p-9 shadow-lg mb-12 scroll-mt-24 border border-slate-800" id="download-kml">
+    <div class="bg-[#111E17] text-white rounded-2xl p-6 sm:p-8 shadow-sm mb-12 scroll-mt-24 border border-[#2D5841]" id="download-kml">
         <div class="max-w-3xl mb-8">
             <span class="text-[11px] font-extrabold uppercase tracking-widest text-[#D97736] flex items-center gap-1.5 mb-2">
                 <i class="fas fa-cloud-arrow-down"></i> Pusat Unduh Geospasial SAMSARA
@@ -433,7 +433,7 @@
     </div>
 
     <!-- SAFETY RULES & SOP GUIDE -->
-    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-9 shadow-sm mb-12">
+    <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs mb-12">
         <div class="flex items-center gap-2 mb-2">
             <span class="text-[11px] font-extrabold uppercase tracking-widest text-[#D97736]">
                 <i class="fas fa-shield-halved"></i> Standar Operasional Jalur
@@ -490,24 +490,24 @@
     </div>
 
     <!-- BOTTOM CTA BANNER -->
-    <div class="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#1E3A2B] to-[#12241B] text-white border border-[#2D5841] shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+    <div class="p-6 sm:p-8 rounded-2xl bg-[#111E17] text-white border border-[#2D5841] shadow-md flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
         <div>
-            <span class="text-xs font-bold text-amber-300 uppercase tracking-widest block mb-1">
+            <span class="text-xs font-semibold text-amber-300 uppercase tracking-wider block mb-1">
                 Basecamp SAMSARA Cigedug
             </span>
-            <h3 class="font-heading font-extrabold text-2xl sm:text-3xl text-white">
+            <h3 class="font-heading font-extrabold text-2xl text-white">
                 Siap Menapaki Puncak Gunung Cikuray?
             </h3>
-            <p class="text-xs sm:text-sm text-emerald-200/90 mt-1 max-w-xl">
+            <p class="text-xs sm:text-sm text-emerald-200/80 mt-1 max-w-xl">
                 Cek ketersediaan kuota harian, amankan izin SIMAKSI online resmi, dan sewa tenda berkualitas terinspeksi langsung dari basecamp.
             </p>
         </div>
 
-        <div class="flex flex-wrap items-center gap-3 shrink-0">
-            <a href="{{ route('simaksi.create') }}" class="touch-target px-6 py-3.5 rounded-2xl bg-[#D97736] hover:bg-[#B25A20] text-white text-sm font-bold transition flex items-center gap-2 shadow-md">
+        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+            <a href="{{ route('simaksi.create') }}" class="touch-target px-5 py-2.5 rounded-xl bg-[#D97736] hover:bg-[#B25A20] text-white text-xs sm:text-sm font-semibold transition flex items-center gap-2 shadow-sm">
                 <i class="fas fa-ticket-alt"></i> Booking SIMAKSI Sekarang
             </a>
-            <a href="{{ route('rental.catalog') }}" class="touch-target px-5 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white text-sm font-bold transition flex items-center gap-2 border border-white/20 shadow-xs">
+            <a href="{{ route('rental.catalog') }}" class="touch-target px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold transition flex items-center gap-2 border border-white/20">
                 <i class="fas fa-campground text-emerald-400"></i> Sewa Perlengkapan
             </a>
         </div>

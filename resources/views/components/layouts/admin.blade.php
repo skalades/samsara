@@ -13,7 +13,7 @@
     <!-- Fonts: Outfit & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Font Awesome 6 Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -32,36 +32,30 @@
         <!-- TOPBAR HEADER -->
         <x-admin.header :title="$title" />
 
-        <!-- FLASH NOTIFICATIONS -->
-        <div class="px-4 sm:px-6 lg:px-8 w-full mt-4">
+        <!-- FLASH NOTIFICATIONS (Modular Alert Component) -->
+        <div class="px-4 sm:px-6 lg:px-8 w-full mt-4 space-y-3">
             @if (session('success'))
-                <div x-data="{ show: true }" x-show="show" class="mb-4 rounded-2xl bg-emerald-50 border border-emerald-200 p-4 text-emerald-800 flex items-start justify-between shadow-2xs">
-                    <div class="flex items-center gap-3">
-                        <i class="fas fa-check-circle text-emerald-600 text-lg"></i>
-                        <p class="text-xs sm:text-sm font-semibold">{{ session('success') }}</p>
-                    </div>
-                    <button @click="show = false" class="text-emerald-600 hover:text-emerald-800"><i class="fas fa-times"></i></button>
-                </div>
+                <x-ui.alert type="success">
+                    {{ session('success') }}
+                </x-ui.alert>
             @endif
 
             @if (session('error'))
-                <div x-data="{ show: true }" x-show="show" class="mb-4 rounded-2xl bg-rose-50 border border-rose-200 p-4 text-rose-800 flex items-start justify-between shadow-2xs">
-                    <div class="flex items-center gap-3">
-                        <i class="fas fa-exclamation-triangle text-rose-600 text-lg"></i>
-                        <p class="text-xs sm:text-sm font-semibold">{{ session('error') }}</p>
-                    </div>
-                    <button @click="show = false" class="text-rose-600 hover:text-rose-800"><i class="fas fa-times"></i></button>
-                </div>
+                <x-ui.alert type="error">
+                    {{ session('error') }}
+                </x-ui.alert>
             @endif
 
             @if (session('warning'))
-                <div x-data="{ show: true }" x-show="show" class="mb-4 rounded-2xl bg-amber-50 border border-amber-200 p-4 text-amber-800 flex items-start justify-between shadow-2xs">
-                    <div class="flex items-center gap-3">
-                        <i class="fas fa-info-circle text-amber-600 text-lg"></i>
-                        <p class="text-xs sm:text-sm font-semibold">{{ session('warning') }}</p>
-                    </div>
-                    <button @click="show = false" class="text-amber-600 hover:text-amber-800"><i class="fas fa-times"></i></button>
-                </div>
+                <x-ui.alert type="warning">
+                    {{ session('warning') }}
+                </x-ui.alert>
+            @endif
+
+            @if (session('info'))
+                <x-ui.alert type="info">
+                    {{ session('info') }}
+                </x-ui.alert>
             @endif
         </div>
 
@@ -84,46 +78,49 @@
     </div>
 
     <!-- MOBILE BOTTOM NAVIGATION (Quick thumb switch on phone) -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#12241B]/95 backdrop-blur-md border-t border-[#2D5841] shadow-2xl">
-        <div class="grid grid-cols-4 h-15">
-            <a href="{{ route('home') }}" class="inline-flex flex-col items-center justify-center text-slate-400 hover:text-white">
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#12241B]/95 backdrop-blur-md border-t border-[#2D5841] shadow-2xl safe-area-inset-bottom">
+        <div class="grid grid-cols-4 h-16">
+            <a href="{{ route('home') }}" class="inline-flex flex-col items-center justify-center text-slate-400 hover:text-white transition active:scale-95">
                 <i class="fas fa-mountain text-base"></i>
-                <span class="text-[9px] mt-0.5 font-medium">Portal</span>
+                <span class="text-[9px] mt-0.5 font-semibold">Portal</span>
             </a>
 
             @php $role = auth()->user()?->role?->value; @endphp
             @if ($role === 'SUPERADMIN' || $role === 'ADMIN_SAR')
-                <a href="{{ route('admin.index') }}" class="inline-flex flex-col items-center justify-center {{ request()->routeIs('admin.index') ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white' }}">
+                <a href="{{ route('admin.index') }}" class="inline-flex flex-col items-center justify-center transition active:scale-95 {{ request()->routeIs('admin.index') ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white' }}">
                     <i class="fas fa-gauge-high text-base"></i>
-                    <span class="text-[9px] mt-0.5 font-medium">Command</span>
+                    <span class="text-[9px] mt-0.5 font-semibold">Command</span>
                 </a>
-                <a href="{{ route('pos.index') }}" class="inline-flex flex-col items-center justify-center {{ request()->routeIs('pos.*') ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white' }}">
+                <a href="{{ route('pos.index') }}" class="inline-flex flex-col items-center justify-center transition active:scale-95 {{ request()->routeIs('pos.*') ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white' }}">
                     <i class="fas fa-cash-register text-base"></i>
-                    <span class="text-[9px] mt-0.5 font-medium">Kasir</span>
+                    <span class="text-[9px] mt-0.5 font-semibold">Kasir</span>
                 </a>
             @elseif ($role === 'KASIR')
-                <a href="{{ route('pos.index') }}" class="inline-flex flex-col items-center justify-center {{ request()->routeIs('pos.index') ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white' }}">
+                <a href="{{ route('pos.index') }}" class="inline-flex flex-col items-center justify-center transition active:scale-95 {{ request()->routeIs('pos.index') ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white' }}">
                     <i class="fas fa-cash-register text-base"></i>
-                    <span class="text-[9px] mt-0.5 font-medium">Kasir</span>
+                    <span class="text-[9px] mt-0.5 font-semibold">Kasir</span>
                 </a>
-                <a href="{{ route('pos.shift') }}" class="inline-flex flex-col items-center justify-center {{ request()->routeIs('pos.shift') ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white' }}">
+                <a href="{{ route('pos.shift') }}" class="inline-flex flex-col items-center justify-center transition active:scale-95 {{ request()->routeIs('pos.shift') ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white' }}">
                     <i class="fas fa-vault text-base"></i>
-                    <span class="text-[9px] mt-0.5 font-medium">Shift</span>
+                    <span class="text-[9px] mt-0.5 font-semibold">Shift</span>
                 </a>
             @else
-                <a href="{{ route('fieldops.index') }}" class="inline-flex flex-col items-center justify-center {{ request()->routeIs('fieldops.*') ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white' }}">
+                <a href="{{ route('fieldops.index') }}" class="inline-flex flex-col items-center justify-center transition active:scale-95 {{ request()->routeIs('fieldops.*') ? 'text-amber-300 font-bold' : 'text-slate-400 hover:text-white' }}">
                     <i class="fas fa-qrcode text-base"></i>
-                    <span class="text-[9px] mt-0.5 font-medium">Scanner</span>
+                    <span class="text-[9px] mt-0.5 font-semibold">Scanner</span>
                 </a>
                 <div class="col-span-1"></div>
             @endif
 
-            <button type="button" @click="mobileSidebarOpen = true" class="inline-flex flex-col items-center justify-center text-amber-400 hover:text-amber-300">
+            <button type="button" @click="mobileSidebarOpen = true" class="inline-flex flex-col items-center justify-center text-amber-400 hover:text-amber-300 transition active:scale-95">
                 <i class="fas fa-bars text-base"></i>
-                <span class="text-[9px] mt-0.5 font-medium">Menu</span>
+                <span class="text-[9px] mt-0.5 font-semibold">Menu</span>
             </button>
         </div>
     </nav>
+
+    <!-- GLOBAL TOAST NOTIFICATION CONTAINER -->
+    <x-ui.toast />
 
     @stack('scripts')
 </body>

@@ -26,48 +26,48 @@
              x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
              x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
              @click.stop
-             class="relative transform overflow-hidden rounded-3xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-slate-200 p-6 sm:p-8">
+             class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg border border-slate-200 p-6 sm:p-7">
 
             <!-- Close Button -->
             <button type="button" @click="open = false"
-                    class="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition flex items-center justify-center cursor-pointer">
-                <i class="fas fa-times text-sm"></i>
+                    class="absolute top-4 right-4 w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition flex items-center justify-center cursor-pointer">
+                <i class="fas fa-times text-xs"></i>
             </button>
 
             <!-- Header -->
-            <div class="flex items-center gap-3.5 mb-4">
-                <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-700 border border-sky-100 flex items-center justify-center text-xl shrink-0 shadow-2xs">
-                    <i class="fas fa-qrcode text-sky-600"></i>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-100 flex items-center justify-center text-lg shrink-0">
+                    <i class="fas fa-qrcode text-emerald-700"></i>
                 </div>
                 <div>
-                    <h3 class="font-heading font-extrabold text-xl text-slate-900 leading-tight">Cari E-Ticket & Status Pesanan</h3>
+                    <h3 class="font-heading font-bold text-lg text-slate-900 leading-tight">Cari E-Ticket & Status Pesanan</h3>
                     <p class="text-xs text-slate-500 mt-0.5">Masukkan Kode Booking SIMAKSI atau No. WhatsApp Ketua</p>
                 </div>
             </div>
 
             <!-- Form -->
-            <form action="{{ route('simaksi.check') }}" method="GET" class="mt-5 space-y-4">
+            <form action="{{ route('simaksi.check') }}" method="GET" class="mt-4 space-y-3.5">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
                         Kode Booking / No. WhatsApp:
                     </label>
                     <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                             <i class="fas fa-search text-xs"></i>
                         </div>
                         <input type="text" name="code" x-ref="searchInput" x-model="query"
                                placeholder="Contoh: SMX-202610-001 atau 0812..."
-                               class="block w-full pl-10 pr-3 py-3 border border-slate-300 rounded-xl leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1E3A2B] text-sm font-semibold">
+                               class="block w-full pl-9 pr-3 py-2.5 border border-slate-300 rounded-lg leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1E3A2B] text-sm font-medium">
                     </div>
                 </div>
 
                 <div class="flex items-center gap-2 pt-1">
                     <button type="submit"
-                            class="touch-target flex-1 py-3 rounded-xl bg-[#1E3A2B] hover:bg-[#12241B] text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 active:scale-95 cursor-pointer">
+                            class="touch-target flex-1 py-2.5 rounded-lg bg-[#1E3A2B] hover:bg-[#12241B] text-white font-semibold text-xs sm:text-sm transition flex items-center justify-center gap-2 active:scale-95 cursor-pointer">
                         <i class="fas fa-arrow-right text-[#D97736]"></i> Cari Data Tiket
                     </button>
                     <button type="button" @click="open = false"
-                            class="touch-target px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer">
+                            class="touch-target px-4 py-2.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs transition cursor-pointer">
                         Batal
                     </button>
                 </div>
